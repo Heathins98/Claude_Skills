@@ -1,6 +1,6 @@
 ---
 name: visual-plan
-description: Use automatically during Claude Code Plan Mode whenever a final implementation plan is about to be presented via ExitPlanMode, or an existing plan is being revised. Before calling ExitPlanMode, render the plan's content as an enhanced HTML page — illustrative code-diff blocks, before/after architecture diagrams, and a visual summary of exact changes — and publish it as an Artifact so the user reviews a visual plan alongside the plain markdown. On revision, redeploy to the same Artifact instead of publishing a new one.
+description: Use automatically during Claude Code Plan Mode whenever a final implementation plan is about to be presented via ExitPlanMode, or an existing plan is being revised. Before calling ExitPlanMode, render the plan's content as an enhanced HTML page — illustrative code-diff blocks, before/after architecture diagrams, and a visual summary of exact changes — and publish it as an Artifact so the user reviews a visual plan alongside the plain markdown. On revision, redeploy to the same Artifact instead of publishing a new one. If the environment does not have access to Artifacts, create the HTML locally and automatically open it in the browser once completed.
 ---
 
 # Visual Plan
@@ -20,6 +20,8 @@ Before writing the HTML, load:
 - `artifact-diagramming` — load it when the plan changes structure, data flow, or component relationships enough to be worth drawing (see Architecture diagrams below).
 
 Do not load `artifact-capabilities` — this page is a static, per-session rendering. It doesn't need a database, user identity, or asset storage.
+
+If Artifacts are not supported in the Claude environment instead make an html of the result in the plan directory and automatically open it in browser for the user. To get the same experience as using Artifacts.
 
 ## Content requirements
 
