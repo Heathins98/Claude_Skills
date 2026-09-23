@@ -57,6 +57,7 @@ Skills that should trigger automatically don't need anything further — Claude 
 | Skill | Description | Trigger |
 |---|---|---|
 | [`visual-plan`](visual-plan/SKILL.md) | Renders Plan Mode's implementation plan as a visual HTML companion — diff previews, before/after architecture diagrams, affected-file call-outs — published as a Claude Artifact alongside the normal plain-markdown plan. | Automatic, during Plan Mode |
+| [`readme-maintainer`](readme-maintainer/SKILL.md) | Keeps a repository's `README.md` accurate and reaching for the right format (status tables, tech-stack rationale, annotated structure trees, Mermaid diagrams) as the code changes — surgical section-level updates only, status sourced only from verifiable repo state. | Automatic, on commit-worthy changes |
 
 ### `visual-plan`
 
@@ -65,6 +66,14 @@ Claude Code's Plan Mode writes a plain-markdown plan and asks for approval throu
 `visual-plan` adds one step ahead of that approval: it takes the same plan content and renders it as an HTML page — proposed diff blocks, Mermaid before/after diagrams, and a visual affected-files list — then publishes it as a Claude Artifact. On any revision within the same conversation, it redeploys to that same Artifact rather than publishing a new one each time, so there's a single evolving link per plan. It never changes where the plain-markdown plan lives or how `ExitPlanMode` approval itself works — the HTML is a companion view, not a replacement for the underlying mechanism.
 
 See [`visual-plan/SKILL.md`](visual-plan/SKILL.md) for the full instructions.
+
+### `readme-maintainer`
+
+A README goes stale the moment nobody's job is to keep it current — a CLI flag changes, a module gets added or removed, a project graduates from experimental to stable, and the README quietly stops telling the truth.
+
+`readme-maintainer` fires at the natural checkpoint after a commit-worthy change (public interface, install/usage flow, project structure, dependencies, or a status milestone — not routine refactors or bugfixes) and checks whether `README.md` still reflects reality. Updates are surgical: it reads the existing file first and edits only the sections whose underlying facts changed, preserving whatever tone and structure the file already has, rather than regenerating the whole thing from a template. "Professional" is defined concretely in the skill itself — reaching for the right format per fact: status tables over prose, a tech-stack table that explains *why* each choice was made, an annotated project-structure tree, inline Mermaid for both component architecture and runtime flows, real testing numbers, and a concrete roadmap. Status, testing, and roadmap claims are only ever sourced from verifiable repo state — version numbers, changelogs, real commits — never invented. The one exception to "surgical only" is bootstrapping: if no `README.md` exists yet, it writes one from scratch, scoped to what's actually true about the project.
+
+See [`readme-maintainer/SKILL.md`](readme-maintainer/SKILL.md) for the full instructions.
 
 ## Adding a new skill
 
